@@ -1,7 +1,7 @@
 Module.register("MMM-GreenLine", {
 	// Default module config.
 	defaults: {
-		elementId: "CALEXT_current", // ID of the element you want to check
+		elementId: "CALEXT_CONTAINER_current", // ID of the element you want to check
 		checkInterval: 60000 // Check every 5 seconds (adjust as needed)
 	},
 
@@ -20,13 +20,17 @@ Module.register("MMM-GreenLine", {
 
 	// Method to check the element's presence.
 	checkElement () {
-		var elementExists = document.getElementById(this.config.elementId) !== null;
+		var htmlElement = document.getElementById(this.config.elementId);
 
-		if (elementExists) {
-			return true;
-		} else {
-			return false;
+		if (htmlElement) {
+			var displayProperty = window.getComputedStyle(htmlElement).getPropertyValue("display");
+
+			if (displayProperty !== "none") {
+				return true;
+			}
 		}
+
+		return false;
 	},
 
 	// Method to display the green line.
@@ -45,11 +49,11 @@ Module.register("MMM-GreenLine", {
 		var wrapper = document.createElement("div");
 		wrapper.style.backgroundColor = "green";
 		wrapper.textContent = "SALA DISPONÍVEL";
-		wrapper.style.fontSize = "40px";
+		wrapper.style.fontSize = "72px";
 		wrapper.style.width = "100%";
 
 		var subtext = document.createElement("p");
-		subtext.style.fontSize = "20px";
+		subtext.style.fontSize = "32px";
 		subtext.textContent = "Para utilizá-la, faça a reserva por meio do Google Agenda";
 
 		wrapper.appendChild(subtext);
