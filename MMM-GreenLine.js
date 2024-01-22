@@ -2,7 +2,7 @@ Module.register("MMM-GreenLine", {
 	// Default module config.
 	defaults: {
 		elementId: "CALEXT_current", // ID of the element you want to check
-		checkInterval: 5000 // Check every 5 seconds (adjust as needed)
+		checkInterval: 60000 // Check every 5 seconds (adjust as needed)
 	},
 
 	// Override start method.
