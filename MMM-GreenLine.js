@@ -2,7 +2,7 @@ Module.register("MMM-GreenLine", {
 	// Default module config.
 	defaults: {
 		elementId: "CALEXT_CONTAINER_current", // ID of the element you want to check
-		checkInterval: 60000 // Check every 5 seconds (adjust as needed)
+		checkInterval: 5000 // Check every 5 seconds (adjust as needed)
 	},
 
 	// Override start method.
@@ -49,11 +49,13 @@ Module.register("MMM-GreenLine", {
 		var wrapper = document.createElement("div");
 		wrapper.style.backgroundColor = "green";
 		wrapper.textContent = "SALA DISPONÍVEL";
+		wrapper.style.paddingTop = "22px";
 		wrapper.style.fontSize = "72px";
+		wrapper.style.fontWeight = "bold";
 		wrapper.style.width = "100%";
 
 		var subtext = document.createElement("p");
-		subtext.style.fontSize = "32px";
+		subtext.style.fontSize = "36px";
 		subtext.textContent = "Para utilizá-la, faça a reserva por meio do Google Agenda";
 
 		wrapper.appendChild(subtext);
