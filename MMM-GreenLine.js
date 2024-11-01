@@ -1,12 +1,13 @@
 Module.register("MMM-GreenLine", {
 	// Default module config.
 	defaults: {
-		elementId: "CALEXT_CONTAINER_current", // ID of the element you want to check
+		elementClass: "event.notfullday.overslot.targetday.now.oneday", // ID of the element you want to check
+		hidingElement: "module.fake_module.MMM-CalendarExt2.CX2.shown",
 		checkInterval: 5000 // Check every 5 seconds (adjust as needed)
 	},
 
 	// Override start method.
-	start () {
+	start() {
 		var self = this;
 
 		// Initial check
@@ -19,33 +20,45 @@ Module.register("MMM-GreenLine", {
 	},
 
 	// Method to check the element's presence.
-	checkElement () {
-		var htmlElement = document.getElementById(this.config.elementId);
+	checkElement() {
+		var htmlElement = document.querySelector(`.${this.config.elementClass}`); // Use class selector
 
 		if (htmlElement) {
-			var displayProperty = window.getComputedStyle(htmlElement).getPropertyValue("display");
-
-			if (displayProperty !== "none") {
-				return true;
-			}
+			this.showOtherElement()
+			return true
 		}
 
+		this.hideOtherElement();
 		return false;
 	},
 
 	// Method to display the green line.
-	showGreenLine () {
+	showGreenLine() {
 		this.updateDom();
 	},
 
+	hideOtherElement() {
+		var element = document.querySelector(`.${this.config.hidingElement}`)
+		if (element) {
+			element.style.display = "none";
+		}
+	},
+
+	showOtherElement() {
+		var element = document.querySelector(`.${this.config.hidingElement}`)
+		if (element) {
+			element.style.display = "block";
+		}
+	},
+
 	// Method to hide the green line.
-	hideGreenLine () {
+	hideGreenLine() {
 		var wrapper = this.getDom();
 		wrapper.style.display = "none"; // Clear the content to hide the green line
 		this.updateDom();
 	},
 
-	getDom () {
+	getDom() {
 		var wrapper = document.createElement("div");
 		wrapper.style.backgroundColor = "green";
 		wrapper.textContent = "SALA DISPONÍVEL";
@@ -72,7 +85,7 @@ Module.register("MMM-GreenLine", {
 	},
 
 	// Override notification handler.
-	notificationReceived (notification, payload, sender) {
+	notificationReceived(notification, payload, sender) {
 		// Optionally handle other notifications
 	}
 });
